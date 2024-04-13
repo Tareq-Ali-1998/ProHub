@@ -1,0 +1,25 @@
+
+If I want to upload my APIs scripts to the SmarterASP.NET hosting provider, then I should
+do the following:
+    * Replace the following string:
+    	"C:/Users/Tareq/Desktop/Freelancing Project APIs/"
+      with this one:
+		"h:/root/home/tareqmahmood-001/www/prohub/"
+
+    * Replace the following string:
+		"C:/Users/Tareq/Desktop/Freelancing Project Assets/Profile Pictures/"
+	  with this one:
+		"h:/root/home/tareqmahmood-001/www/prohub/Freelancing Project Assets/Profile Pictures/"
+
+
+	* I should alter the constructor in the "APIHandler.php" class to change
+	  the database connection settings.
+
+	* I should run the passwords hashing script on the server side (BCRYPT Hashing Algorithm).
+
+
+And if I want to convert the files from the server side to the local side (My Laptop), I just need to
+do the opposite, but I should remember always whether or not the passwords are hashed, so I can't retrieve
+the original ones if I have hashed the passwords on the server side (Remember, the hashing here is one way).
+	
+########################################

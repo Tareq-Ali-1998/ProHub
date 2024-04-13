@@ -1,0 +1,43 @@
+You are correct that encoding binary data as base64 can increase its size by approximately 1.33 times (not 1.35). If you want to avoid this overhead and send the binary data in a more compact form, you can use hexadecimal encoding instead.
+
+In PHP, you can convert the binary string to a hexadecimal string using the `bin2hex` function. Here's an example PHP script that sends the binary data of a JPEG image as a hexadecimal string in a JSON response:
+
+```php
+<?php
+$imagePath = 'path/to/image.jpg';
+$imageData = file_get_contents($imagePath);
+
+$response = [
+  'imageData' => bin2hex($imageData),
+];
+
+header('Content-Type: application/json');
+echo json_encode($response);
+?>
+```
+
+In this script, we're using the `bin2hex` function to convert the binary data of the image to a hexadecimal string, and then adding the hexadecimal string to a JSON response array. We're setting the `Content-Type` header to `application/json` to indicate that the response is in JSON format, and then sending the JSON response using `echo`.
+
+To receive the image data in a Dart app, you can make an HTTP request to the PHP API using the `http` package, and then decode the hexadecimal-encoded image data from the JSON response using the `hex.decode` function from the `convert` library. Here's an example Dart code that makes an HTTP GET request to the PHP API and decodes the hexadecimal-encoded image data from the JSON response:
+
+```dart
+import 'dart:convert';
+import 'package:convert/convert.dart';
+import 'package:http/http.dart' as http;
+
+void getImage() async {
+  final response = await http.get(Uri.parse('https://example.com/getImage.php'));
+
+  if (response.statusCode == 200) {
+    final jsonResponse = jsonDecode(response.body);
+    final imageData = hex.decode(jsonResponse['imageData']);
+    // Process the binary image data...
+  } else {
+    print('Failed to load image: ${response.statusCode}');
+  }
+}
+```
+
+In this code, we're making an HTTP GET request to the PHP API using the `http` package, and then decoding the JSON response using `jsonDecode`. We're then extracting the hexadecimal-encoded image data from the JSON response and decoding it using the `hex.decode` function from the `convert` library. The decoded binary data can then be processed further, such as decoding it to an image format or saving it to a file.
+
+Note that sending binary data as a string of zeros and ones (binary string) is not recommended, as it will result in a significant increase in data size compared to hexadecimal encoding. Hexadecimal encoding is a more compact and efficient way to represent binary data as a string of characters.
